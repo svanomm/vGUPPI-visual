@@ -302,6 +302,18 @@ else:
         with all_slots[idx]:
             st.plotly_chart(fig, use_container_width=True, key=f"heatmap_{vg_name}")
 
+
+# ============================================================================
+# Formulas
+# ============================================================================
+st.header("Formulas")
+
+st.latex(r"vGUPPI_{D1} = \frac{DR_{DU}\cdot M_U\cdot W_U}{P_D}")
+st.latex(r"vGUPPI_{D2} = vGUPPI_1 - \frac{M_{UD}\cdot W_D}{P_D}")
+st.latex(r"E_P = \frac{PTR_R\cdot W_R}{P_R}")
+st.latex(r"E_{SD} = \frac{1}{M_U} - (E\cdot E_P)")
+st.latex(r"vGUPPI_{D3} = vGUPPI_2 - \frac{E_{SD} \cdot M_{UD}^2 \cdot W_D}{P_D}")
+
 # ============================================================================
 # Footer
 # ============================================================================
