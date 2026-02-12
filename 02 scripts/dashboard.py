@@ -196,7 +196,7 @@ vg_cols = st.columns(5)
 for i, name in enumerate(VGUPPI_NAMES):
     vg_cols[i].metric(
         label=name,
-        value=f"{vguppis[name]:.4f}",
+        value=f"{vguppis[name] * 100:.2f}%",
         help=VGUPPI_DESCRIPTIONS[name],
     )
 
@@ -242,30 +242,49 @@ else:
     # Determine a nice colour scale diverging around 0
     color_scale = "RdBu_r"
 
+    # Compute all heatmaps first to determine global min/max for consistent scaling
+    heatmap_data = {}
+    z_global_min = float("inf")
+    z_global_max = float("-inf")
+
+    for vg_name in VGUPPI_NAMES:
+        x_vals, y_vals, z_grid = compute_heatmap(
+            inputs, x_param, y_param, vg_name, resolution=resolution
+        )
+        heatmap_data[vg_name] = (x_vals, y_vals, z_grid)
+        z_global_min = min(z_global_min, z_grid.min())
+        z_global_max = max(z_global_max, z_grid.max())
+
+    # Use symmetric range around 0 for consistent red (negative) / blue (positive) coloring
+    z_abs_max = max(abs(z_global_min), abs(z_global_max))
+    zmin = -z_abs_max
+    zmax = z_abs_max
+
     # Render heatmaps in a 2-then-3 grid (or 3+2)
     row1_cols = st.columns(3)
     row2_cols = st.columns(3)
     all_slots = row1_cols + row2_cols  # 6 slots, use first 5
 
     for idx, vg_name in enumerate(VGUPPI_NAMES):
-        x_vals, y_vals, z_grid = compute_heatmap(
-            inputs, x_param, y_param, vg_name, resolution=resolution
-        )
+        x_vals, y_vals, z_grid = heatmap_data[vg_name]
 
         fig = go.Figure()
 
-        # Heatmap trace
+        # Heatmap trace with fixed color scale
         fig.add_trace(
             go.Heatmap(
                 x=np.round(x_vals, 4),
                 y=np.round(y_vals, 4),
-                z=z_grid,
+                z=z_grid * 100,
                 colorscale=color_scale,
+                zmin=zmin * 100,
+                zmax=zmax * 100,
+                zmid=0,
                 colorbar=dict(title=dict(text=vg_name, side="right")),
                 hovertemplate=(
                     f"{PARAM_META[x_param]['label']}: %{{x:.3f}}<br>"
                     f"{PARAM_META[y_param]['label']}: %{{y:.3f}}<br>"
-                    f"{vg_name}: %{{z:.4f}}<extra></extra>"
+                    f"{vg_name}: %{{z:.2f}}%<extra></extra>"
                 ),
             )
         )
@@ -286,7 +305,7 @@ else:
                 showlegend=False,
                 hovertemplate=(
                     f"Current: ({x_current:.3f}, {y_current:.3f})<br>"
-                    f"{vg_name}: {vguppis[vg_name]:.4f}<extra></extra>"
+                    f"{vg_name}: {vguppis[vg_name] * 100:.2f}%<extra></extra>"
                 ),
             )
         )
@@ -302,6 +321,28 @@ else:
         with all_slots[idx]:
             st.plotly_chart(fig, use_container_width=True, key=f"heatmap_{vg_name}")
 
+
+# Intuition
+st.header("Intuition")
+st.markdown(
+    """
+    We present intuition for some of the more complex intermediate values.
+
+    **Diversion ratios:**
+
+    $dr_{RD}$: Sales gained by the downstream supplier divided by revenue lost by rival increasing prices. When R raises prices, customers purchase less from R and more from D.
+    
+    $dr_{DU}$: Sales gained by the upstream supplier divided by revenue lost by downstream partner increasing prices. When D raises prices, customers purchase less from D and more from R, but R has to purchase more input from U.
+    
+    $dr_{UD}$: Sales gained by the downstream partner divided by revenue lost by upstream supplier increasing prices. U raises the price it charges to R. Customers purchase less from R and more from D.
+
+    **Elasticities:**
+
+    $e_p$: % change in price of downstream rival divided by % change in price of upstream supplier. When input prices increase, how much do rivals pass through in their product?
+
+    $e_{sd}=e_{sr}$: When input prices increase, how much do downstream companies shift their purchases to other upstream suppliers?
+    """
+)
 
 # ============================================================================
 # Formulas

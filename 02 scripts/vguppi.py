@@ -118,7 +118,7 @@ PARAM_META: dict[str, ParamMeta] = {
     # Margins
     "m_D": {
         "label": "D's profit margin (m_D)",
-        "min": 0.0,
+        "min": 0.05,
         "max": 1.0,
         "step": 0.05,
         "default": 0.5,
@@ -126,7 +126,7 @@ PARAM_META: dict[str, ParamMeta] = {
     },
     "m_R": {
         "label": "R's profit margin (m_R)",
-        "min": 0.0,
+        "min": 0.05,
         "max": 1.0,
         "step": 0.05,
         "default": 0.5,
@@ -134,7 +134,7 @@ PARAM_META: dict[str, ParamMeta] = {
     },
     "m_U": {
         "label": "U's avg margin to rivals (m_U)",
-        "min": 0.0,
+        "min": 0.05,
         "max": 1.0,
         "step": 0.05,
         "default": 0.5,
@@ -142,7 +142,7 @@ PARAM_META: dict[str, ParamMeta] = {
     },
     "m_UD": {
         "label": "U's margin on sales to D (m_UD)",
-        "min": 0.0,
+        "min": 0.05,
         "max": 1.0,
         "step": 0.05,
         "default": 0.5,
@@ -151,7 +151,7 @@ PARAM_META: dict[str, ParamMeta] = {
     # Diversion ratios
     "dr_RD": {
         "label": "Diversion R→D (dr_RD)",
-        "min": 0.0,
+        "min": 0.05,
         "max": 1.0,
         "step": 0.05,
         "default": 0.4,
@@ -159,7 +159,7 @@ PARAM_META: dict[str, ParamMeta] = {
     },
     "dr_DU": {
         "label": "Diversion D→U (dr_DU)",
-        "min": 0.0,
+        "min": 0.05,
         "max": 1.0,
         "step": 0.05,
         "default": 0.25,
@@ -167,7 +167,7 @@ PARAM_META: dict[str, ParamMeta] = {
     },
     "dr_UD": {
         "label": "Diversion U→D (dr_UD)",
-        "min": 0.0,
+        "min": 0.05,
         "max": 1.0,
         "step": 0.05,
         "default": 0.4,
@@ -176,7 +176,7 @@ PARAM_META: dict[str, ParamMeta] = {
     # Pass-through rates
     "ptr_U": {
         "label": "Pass-through U→R (ptr_U)",
-        "min": 0.0,
+        "min": 0.05,
         "max": 1.0,
         "step": 0.05,
         "default": 0.5,
@@ -184,7 +184,7 @@ PARAM_META: dict[str, ParamMeta] = {
     },
     "ptr_R": {
         "label": "Pass-through R cost→price (ptr_R)",
-        "min": 0.0,
+        "min": 0.05,
         "max": 1.0,
         "step": 0.05,
         "default": 0.5,
