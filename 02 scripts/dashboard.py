@@ -175,6 +175,20 @@ st.markdown(
     "Vertical Gross Upward Pricing Pressure Index — an interactive tool "
     "for analysing the competitive effects of vertical mergers."
 )
+st.title("Introduction")
+st.markdown("""
+    vGUPPI stands for vertical Gross Upward Pricing Pressure Index. A positive value indicates that a merged entity is incentivized to raise prices post-merger, while a negative value suggests a potential price decrease. The vGUPPI models used here define 3 firms: an upstream supplier (U), a downstream partner (D) that purchases from U, and a downstream rival (R) that also purchases from U. U and D merge, and we want to understand how this affects the merged entity's incentives to raise prices.
+            
+    Moresi and Salop define 5 different vGUPPI metrics in their paper:
+
+    - **vGUPPI_U**: The incentive for the upstream supplier to raise its price after the merger.
+    - **vGUPPI_R**: The incentive for downstream rivals to raise their prices after the merger.
+    - **vGUPPI_D1**: The incentive for the merged downstream partner to raise prices.
+    - **vGUPPI_D2**: The incentive for the merged downstream partner to raise prices, allowing for elimination of double marginalization (EDM) effects.
+    - **vGUPPI_D3**: The incentive for the merged downstream partner to raise prices, allowing for EDM effects and input substitution.
+            
+    In general, $vGUPPI_{D1} > vGUPPI_{D2} > vGUPPI_{D3}$, because successive adjustments introduce efficiencies (EDM) or competitive responses to price increases (input substitution) that reduce the merged entity's incentive to raise prices.
+    """)
 
 # ============================================================================
 # Results — intermediate values + vGUPPI outputs
@@ -349,11 +363,17 @@ st.markdown(
 # ============================================================================
 st.header("Formulas")
 
-st.latex(r"vGUPPI_{D1} = \frac{DR_{DU}\cdot M_U\cdot W_U}{P_D}")
-st.latex(r"vGUPPI_{D2} = vGUPPI_1 - \frac{M_{UD}\cdot W_D}{P_D}")
-st.latex(r"E_P = \frac{PTR_R\cdot W_R}{P_R}")
-st.latex(r"E_{SD} = \frac{1}{M_U} - (E\cdot E_P)")
-st.latex(r"vGUPPI_{D3} = vGUPPI_2 - \frac{E_{SD} \cdot M_{UD}^2 \cdot W_D}{P_D}")
+st.latex(
+    r"vGUPPI_U = \frac{dr_{RD}\cdot m_D \cdot p_D / w_R}{1 + (m_R \cdot e_{sr} / e_p)}"
+)
+st.latex(
+    r"vGUPPI_R = vGUPPI_U \cdot ptr_U \cdot \frac{w_R}{p_R} \cdot (1 - (vGUPPI_U \cdot ptr_U \cdot e_{sr}))"
+)
+st.latex(r"vGUPPI_{D1} = \frac{dr_{DU}\cdot m_U\cdot w_U}{p_D}")
+st.latex(r"vGUPPI_{D2} = vGUPPI_1 - \frac{m_{UD}\cdot w_D}{p_D}")
+st.latex(r"E_P = \frac{ptr_R\cdot w_R}{p_R}")
+st.latex(r"E_{SD} = \frac{1}{m_U} - (e\cdot e_p)")
+st.latex(r"vGUPPI_{D3} = vGUPPI_2 - \frac{e_{sd} \cdot m_{UD}^2 \cdot w_D}{p_D}")
 
 # ============================================================================
 # Footer
