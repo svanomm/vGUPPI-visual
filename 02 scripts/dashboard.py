@@ -256,23 +256,13 @@ else:
     # Determine a nice colour scale diverging around 0
     color_scale = "RdBu_r"
 
-    # Compute all heatmaps first to determine global min/max for consistent scaling
+    # Compute all heatmaps first
     heatmap_data = {}
-    z_global_min = float("inf")
-    z_global_max = float("-inf")
-
     for vg_name in VGUPPI_NAMES:
         x_vals, y_vals, z_grid = compute_heatmap(
             inputs, x_param, y_param, vg_name, resolution=resolution
         )
         heatmap_data[vg_name] = (x_vals, y_vals, z_grid)
-        z_global_min = min(z_global_min, z_grid.min())
-        z_global_max = max(z_global_max, z_grid.max())
-
-    # Use symmetric range around 0 for consistent red (negative) / blue (positive) coloring
-    z_abs_max = max(abs(z_global_min), abs(z_global_max))
-    zmin = -z_abs_max
-    zmax = z_abs_max
 
     # Render heatmaps in a 2-then-3 grid (or 3+2)
     row1_cols = st.columns(3)
@@ -282,9 +272,15 @@ else:
     for idx, vg_name in enumerate(VGUPPI_NAMES):
         x_vals, y_vals, z_grid = heatmap_data[vg_name]
 
+        # Use symmetric range around 0 for each individual heatmap
+        # This maintains red=positive, blue=negative while rescaling each chart
+        z_abs_max = max(abs(z_grid.min()), abs(z_grid.max()))
+        zmin = -z_abs_max
+        zmax = z_abs_max
+
         fig = go.Figure()
 
-        # Heatmap trace with fixed color scale
+        # Heatmap trace with individual color scale per chart
         fig.add_trace(
             go.Heatmap(
                 x=np.round(x_vals, 4),
