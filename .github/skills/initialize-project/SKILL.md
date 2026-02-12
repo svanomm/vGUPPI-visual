@@ -8,6 +8,6 @@ Use this skill when there is no `.venv` folder in the repository, or if the user
 Run the following commands in the terminal:
 ```
 uv init --python 3.12
-uv add pandas matplotlib marimo[recommended]
+uv add pandas matplotlib
 git init
 ```

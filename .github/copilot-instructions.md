@@ -6,7 +6,6 @@
 - Add type hints to all Python functions and methods wherever possible.
 - Add docstrings to all Python functions and methods using the Google style.
 - After modifying Python scripts, run `uv run ruff check --fix;uv run ruff format` to ensure code quality and formatting standards are met. If any errors are reported, fix them before moving forward.
-- Write your tests in simple .py scripts, but all other code should be written using `marimo`.
 ALWAYS keep things simple. ALWAYS write small tests to confirm that your code works as expected.
 
 ## Project Details
