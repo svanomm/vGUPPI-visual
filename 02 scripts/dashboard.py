@@ -368,10 +368,10 @@ st.latex(
     r"vGUPPI_R = vGUPPI_U \cdot ptr_U \cdot \frac{w_R}{p_R} \cdot (1 - (vGUPPI_U \cdot ptr_U \cdot e_{sr}))"
 )
 st.latex(r"vGUPPI_{D1} = \frac{dr_{DU}\cdot m_U\cdot w_U}{p_D}")
-st.latex(r"vGUPPI_{D2} = vGUPPI_1 - \frac{m_{UD}\cdot w_D}{p_D}")
+st.latex(r"vGUPPI_{D2} = vGUPPI_{D1} - \frac{m_{UD}\cdot w_D}{p_D}")
 st.latex(r"E_P = \frac{ptr_R\cdot w_R}{p_R}")
 st.latex(r"E_{SD} = \frac{1}{m_U} - (e\cdot e_p)")
-st.latex(r"vGUPPI_{D3} = vGUPPI_2 - \frac{e_{sd} \cdot m_{UD}^2 \cdot w_D}{p_D}")
+st.latex(r"vGUPPI_{D3} = vGUPPI_{D2} - \frac{e_{sd} \cdot m_{UD}^2 \cdot w_D}{p_D}")
 
 # ============================================================================
 # Footer
