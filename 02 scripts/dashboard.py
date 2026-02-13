@@ -351,6 +351,8 @@ st.markdown(
     $e_p$: % change in price of downstream rival divided by % change in price of upstream supplier. When input prices increase, how much do rivals pass through in their product?
 
     $e_{sd}=e_{sr}$: When input prices increase, how much do downstream companies shift their purchases to other upstream suppliers?
+
+    $e$: downstream market price elasticity. When downstream prices increase, how does overall quantity demanded change?
     """
 )
 
